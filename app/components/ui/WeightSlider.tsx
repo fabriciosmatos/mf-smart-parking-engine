@@ -59,20 +59,30 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
         </div>
 
         {isTooltipActive && (
-          <div className="absolute z-[9999] bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-slate-900 text-white p-6 rounded-3xl text-[11px] shadow-2xl border border-slate-800 animate-fadeIn pointer-events-none">
-            <p className="font-black mb-3 text-indigo-400 uppercase tracking-widest flex items-center gap-2">
+          <div className="absolute z-[9999] left-full top-0 ml-4 w-80 bg-slate-900 text-white p-6 rounded-2xl text-xs shadow-2xl border border-slate-700 animate-fadeIn">
+            {/* Seta apontando para esquerda */}
+            <div className="absolute right-full top-6 mr-[-1px]">
+              <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-slate-900"></div>
+            </div>
+            
+            <p className="font-black mb-3 text-indigo-400 uppercase tracking-widest flex items-center gap-2 text-[10px]">
               <i className="fa-solid fa-circle-nodes"></i> Lógica de Decisão
             </p>
-            <p className="mb-4 leading-relaxed text-slate-300 italic">"{info.desc}"</p>
-            <div className="space-y-3 pt-3 border-t border-slate-800">
-              <p className="text-emerald-400 font-bold leading-snug">
-                <i className="fa-solid fa-caret-up mr-2"></i>{info.up}
-              </p>
-              <p className="text-slate-400 font-medium leading-snug">
-                <i className="fa-solid fa-caret-down mr-2"></i>{info.down}
-              </p>
+            <p className="mb-4 leading-relaxed text-slate-200">{info.desc}</p>
+            <div className="space-y-3 pt-3 border-t border-slate-700">
+              <div className="bg-emerald-500/10 p-3 rounded-xl">
+                <p className="text-emerald-400 font-bold leading-snug flex items-start gap-2">
+                  <i className="fa-solid fa-arrow-up mt-0.5"></i>
+                  <span>{info.up}</span>
+                </p>
+              </div>
+              <div className="bg-rose-500/10 p-3 rounded-xl">
+                <p className="text-rose-400 font-bold leading-snug flex items-start gap-2">
+                  <i className="fa-solid fa-arrow-down mt-0.5"></i>
+                  <span>{info.down}</span>
+                </p>
+              </div>
             </div>
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-4 h-4 bg-slate-900 rotate-45 -mt-2"></div>
           </div>
         )}
       </div>
