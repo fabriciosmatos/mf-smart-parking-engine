@@ -35,7 +35,7 @@ export const AuditStep: React.FC<AuditStepProps> = ({
           ))}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 max-w-full overflow-hidden">
           <ResultsTable
             assignments={result.assignments}
             units={units}

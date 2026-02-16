@@ -14,7 +14,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   spaces
 }) => {
   return (
-    <div>
+    <div className="max-w-full">
       <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">\n        <div>
           <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight italic leading-none">
             Mapa de Ocupação Final
