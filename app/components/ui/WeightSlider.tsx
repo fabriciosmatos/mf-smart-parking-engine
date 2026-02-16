@@ -59,7 +59,7 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
         </div>
 
         {isTooltipActive && (
-          <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-slate-900 text-white p-6 rounded-3xl text-[11px] shadow-2xl border border-slate-800 animate-fadeIn">
+          <div className="absolute z-[9999] bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-slate-900 text-white p-6 rounded-3xl text-[11px] shadow-2xl border border-slate-800 animate-fadeIn pointer-events-none">
             <p className="font-black mb-3 text-indigo-400 uppercase tracking-widest flex items-center gap-2">
               <i className="fa-solid fa-circle-nodes"></i> Lógica de Decisão
             </p>
