@@ -36,11 +36,8 @@ const App: React.FC = () => {
     // Calcula total de solicitações baseado nas unidades criadas
     const totalRequests = mockUnits.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
     
-    // Gera 20-30% a MAIS de vagas do que solicitações para garantir excesso
-    const extraSpaces = Math.floor(totalRequests * (0.2 + Math.random() * 0.1));
-    const totalSpaces = totalRequests + extraSpaces;
-    
-    const mockSpaces = generateMockSpaces(totalSpaces);
+    // Gera EXATAMENTE o mesmo número de vagas que solicitações
+    const mockSpaces = generateMockSpaces(totalRequests);
     
     // Agora sim, enriquece as unidades com histórico baseado nas vagas reais
     const enrichedUnits = generateMockUnits(unitCount, mockSpaces);
