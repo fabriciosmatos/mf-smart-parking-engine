@@ -31,7 +31,7 @@ const App: React.FC = () => {
   const handleGenerateMock = () => {
     const unitCount = Math.floor(Math.random() * (70 - 50 + 1)) + 50;
     
-    // Gera unidades primeiro para calcular solicitações reais
+    // Gera unidades UMA VEZ (sem histórico ainda)
     const mockUnits = generateMockUnits(unitCount, undefined);
     
     // Calcula total de solicitações baseado nas unidades criadas
@@ -40,8 +40,20 @@ const App: React.FC = () => {
     // Gera EXATAMENTE o mesmo número de vagas que solicitações
     const mockSpaces = generateMockSpaces(totalRequests);
     
-    // Agora sim, enriquece as unidades com histórico baseado nas vagas reais
-    const enrichedUnits = generateMockUnits(unitCount, mockSpaces);
+    // Enriquece as MESMAS unidades com histórico baseado nas vagas reais
+    const enrichedUnits = mockUnits.map(unit => {
+      const randomSpace = mockSpaces[Math.floor(Math.random() * mockSpaces.length)];
+      return {
+        ...unit,
+        previousAssignment: {
+          spaceId: randomSpace.id,
+          coverage: randomSpace.coverage,
+          access: randomSpace.access,
+          wasCritical: randomSpace.isCritical,
+          isNearElevator: randomSpace.isNearElevator
+        }
+      };
+    });
     
     loadMockData(enrichedUnits, mockSpaces);
   };
