@@ -45,7 +45,7 @@ export const AuditHeader: React.FC<AuditHeaderProps> = ({ result, onDownload }) 
       </div>
       <button
         onClick={onDownload}
-        className="w-full lg:w-auto px-10 py-5 bg-indigo-600 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-xl hover:bg-indigo-500 transition-all flex items-center justify-center gap-3"
+        className="w-full lg:w-auto px-6 md:px-10 py-4 md:py-5 bg-indigo-600 rounded-2xl font-black uppercase tracking-widest text-[11px] shadow-xl hover:bg-indigo-500 transition-all flex items-center justify-center gap-3 flex-shrink-0"
       >
         <i className="fa-solid fa-file-zipper text-lg"></i> Pacote de Auditoria (.zip)
       </button>

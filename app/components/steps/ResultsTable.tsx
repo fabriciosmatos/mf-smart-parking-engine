@@ -38,10 +38,10 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-inner max-h-[700px] overflow-y-auto custom-scrollbar">\n        <table className="w-full text-left text-sm min-w-[1000px] border-separate border-spacing-0">
           <thead className="bg-slate-900 text-white sticky top-0 uppercase text-[10px] font-black z-20 tracking-widest">
             <tr>
-              <th className="px-10 py-6">Unidade</th>
-              <th className="px-10 py-6 text-center">Vaga / Atributos</th>
-              <th className="px-10 py-6">Análise de Regras</th>
-              <th className="px-10 py-6 text-right">Score</th>
+              <th className="px-4 md:px-6 lg:px-10 py-6">Unidade</th>
+              <th className="px-4 md:px-6 lg:px-10 py-6 text-center">Vaga / Atributos</th>
+              <th className="px-4 md:px-6 lg:px-10 py-6">Análise de Regras</th>
+              <th className="px-4 md:px-6 lg:px-10 py-6 text-right">Score</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">

@@ -15,7 +15,7 @@ export const ResultTableRow: React.FC<ResultTableRowProps> = ({
 }) => {
   return (
     <tr className="hover:bg-slate-50 transition-all group">
-      <td className="px-10 py-6">
+      <td className="px-4 md:px-6 lg:px-10 py-6">
         <div className="font-black text-slate-800 text-2xl leading-none italic">
           {unit.apartment}
         </div>
@@ -23,7 +23,7 @@ export const ResultTableRow: React.FC<ResultTableRowProps> = ({
           Bloco {unit.block}
         </div>
       </td>
-      <td className="px-10 py-6 text-center">
+      <td className="px-4 md:px-6 lg:px-10 py-6 text-center">
         <div className="inline-flex flex-col items-center">
           <span className="px-6 py-2 bg-white text-indigo-700 rounded-xl font-mono font-black border border-indigo-100 shadow-sm text-lg">
             #{space.number}
@@ -48,7 +48,7 @@ export const ResultTableRow: React.FC<ResultTableRowProps> = ({
           </div>
         </div>
       </td>
-      <td className="px-10 py-6">
+      <td className="px-4 md:px-6 lg:px-10 py-6">
         <div className="flex flex-wrap gap-2 max-w-md">
           {assignment.rulesApplied.map((rule, idx) => {
             const icon = getRuleIconFromRuleName(rule.name);
@@ -75,7 +75,7 @@ export const ResultTableRow: React.FC<ResultTableRowProps> = ({
           })}
         </div>
       </td>
-      <td className="px-10 py-6 text-right">
+      <td className="px-4 md:px-6 lg:px-10 py-6 text-right">
         <div className={`font-mono font-black text-xl italic leading-none ${
           assignment.score >= 5000 ? 'text-indigo-600' : 'text-slate-900'
         }`}>
