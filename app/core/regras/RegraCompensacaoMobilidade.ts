@@ -12,7 +12,7 @@ export class RegraCompensacaoMobilidade implements RegraNegocios {
   nome = 'Compensação Mobilidade';
 
   ehAplicavel(contexto: ContextoAlocacao): boolean {
-    return contexto.unidade.alocacaoAnterior?.acesso === 'BLOQUEADA';
+    return contexto.unidade.alocacaoAnterior?.acesso === 'TRAVADA';
   }
 
   aplicar(contexto: ContextoAlocacao): ResultadoRegra {
