@@ -20,7 +20,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
   onNext
 }) => {
   return (
-    <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-200 animate-fadeIn">
+    <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-200 animate-fadeIn overflow-x-hidden max-w-full">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-3xl font-black text-slate-900 italic tracking-tight">

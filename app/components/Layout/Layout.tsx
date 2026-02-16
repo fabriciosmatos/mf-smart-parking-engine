@@ -18,7 +18,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeStep }) => {
       <main className="flex-1 flex flex-col min-w-0">
         <Header currentStepDesc={currentStep?.desc || 'Operação'} />
 
-        <div className="flex-1 overflow-y-auto p-10">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-10">
           {children}
         </div>
       </main>

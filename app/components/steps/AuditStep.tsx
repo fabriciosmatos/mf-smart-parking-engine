@@ -19,8 +19,8 @@ export const AuditStep: React.FC<AuditStepProps> = ({
   onDownloadAudit
 }) => {
   return (
-    <div className="space-y-8 animate-fadeIn">
-      <div className="bg-white p-6 md:p-10 rounded-3xl shadow-2xl border border-slate-200 overflow-x-hidden">
+    <div className="space-y-8 animate-fadeIn max-w-full">
+      <div className="bg-white p-6 md:p-10 rounded-3xl shadow-2xl border border-slate-200 overflow-x-hidden max-w-full">
         <AuditHeader result={result} onDownload={onDownloadAudit} />
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">

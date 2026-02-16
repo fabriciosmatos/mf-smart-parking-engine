@@ -22,8 +22,8 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
   return (
-    <div className="space-y-8 animate-fadeIn">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl border border-slate-200">
+    <div className="space-y-8 animate-fadeIn max-w-full">
+      <div className="bg-white p-10 rounded-3xl shadow-2xl border border-slate-200 overflow-x-hidden max-w-full">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
           <div>
             <h2 className="text-4xl font-black text-slate-900 tracking-tight italic">
