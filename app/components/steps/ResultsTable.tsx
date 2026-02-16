@@ -15,7 +15,8 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
 }) => {
   return (
     <div className="max-w-full">
-      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">\n        <div>
+      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+        <div>
           <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight italic leading-none">
             Mapa de Ocupação Final
           </h2>
@@ -35,7 +36,8 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-inner max-h-[700px] overflow-y-auto custom-scrollbar">\n        <table className="w-full text-left text-sm min-w-[1000px] border-separate border-spacing-0">
+      <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-inner max-h-[700px] overflow-y-auto custom-scrollbar">
+        <table className="w-full text-left text-sm min-w-[1000px] border-separate border-spacing-0">
           <thead className="bg-slate-900 text-white sticky top-0 uppercase text-[10px] font-black z-20 tracking-widest">
             <tr>
               <th className="px-4 md:px-6 lg:px-10 py-6">Unidade</th>
