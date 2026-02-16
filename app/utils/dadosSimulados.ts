@@ -3,7 +3,7 @@ import { Unit, ParkingSpace, VehicleType } from '../types';
 /**
  * Gera unidades fictícias para testes e demonstrações
  */
-export function generateMockUnits(count: number): Unit[] {
+export function generateMockUnits(count: number, availableSpaces?: ParkingSpace[]): Unit[] {
   const blocks = ['A', 'B', 'C', 'D'];
   const vehicleTypes: VehicleType[] = ['CAR', 'SUV', 'MOTO'];
   const units: Unit[] = [];
@@ -34,16 +34,41 @@ export function generateMockUnits(count: number): Unit[] {
     const isDefaulting = Math.random() < 0.08; // 8% inadimplentes
     const isPresentInAssembly = Math.random() < 0.70; // 70% presentes
 
-    // 40% das unidades têm histórico de alocação anterior
+    // 50-70% das unidades têm histórico de alocação anterior (aleatório)
     let previousAssignment = undefined;
-    if (Math.random() < 0.4) {
+    const hasHistoryChance = 0.5 + Math.random() * 0.2; // Entre 50% e 70%
+    if (Math.random() < hasHistoryChance) {
       const hasBadHistory = Math.random() < 0.6; // 60% dos que têm histórico, têm histórico ruim
+      
+      // Se temos vagas disponíveis, usar uma vaga real (aleatória)
+      let spaceId: string;
+      let coverage: 'COVERED' | 'UNCOVERED';
+      let access: 'FREE' | 'LOCKED';
+      let wasCritical: boolean;
+      let isNearElevator: boolean;
+      
+      if (availableSpaces && availableSpaces.length > 0) {
+        const randomSpace = availableSpaces[Math.floor(Math.random() * availableSpaces.length)];
+        spaceId = randomSpace.id;
+        coverage = randomSpace.coverage;
+        access = randomSpace.access;
+        wasCritical = randomSpace.isCritical;
+        isNearElevator = randomSpace.isNearElevator;
+      } else {
+        // Fallback: gerar dados sintéticos
+        spaceId = `PREV_${i}`;
+        coverage = hasBadHistory && Math.random() < 0.5 ? 'UNCOVERED' : 'COVERED';
+        access = hasBadHistory && Math.random() < 0.4 ? 'LOCKED' : 'FREE';
+        wasCritical = hasBadHistory && Math.random() < 0.3;
+        isNearElevator = Math.random() < 0.5;
+      }
+      
       previousAssignment = {
-        spaceId: `PREV_${i}`,
-        coverage: hasBadHistory && Math.random() < 0.5 ? 'UNCOVERED' : 'COVERED',
-        access: hasBadHistory && Math.random() < 0.4 ? 'LOCKED' : 'FREE',
-        wasCritical: hasBadHistory && Math.random() < 0.3,
-        isNearElevator: Math.random() < 0.5
+        spaceId,
+        coverage,
+        access,
+        wasCritical,
+        isNearElevator
       } as const;
     }
 

@@ -29,9 +29,11 @@ const App: React.FC = () => {
 
   const handleGenerateMock = () => {
     const unitCount = Math.floor(Math.random() * (70 - 50 + 1)) + 50;
-    const mockUnits = generateMockUnits(unitCount);
-    const totalSpacesNeeded = mockUnits.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
-    const mockSpaces = generateMockSpaces(totalSpacesNeeded + 10);
+    const totalSpacesNeeded = unitCount * 1.3; // ~30% a mais de vagas que unidades
+    const mockSpaces = generateMockSpaces(Math.floor(totalSpacesNeeded));
+    
+    // Gera unidades com histórico baseado nas vagas reais
+    const mockUnits = generateMockUnits(unitCount, mockSpaces);
     
     loadMockData(mockUnits, mockSpaces);
   };
