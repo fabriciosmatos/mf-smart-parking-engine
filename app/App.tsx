@@ -29,13 +29,23 @@ const App: React.FC = () => {
 
   const handleGenerateMock = () => {
     const unitCount = Math.floor(Math.random() * (70 - 50 + 1)) + 50;
-    const totalSpacesNeeded = unitCount * 1.3; // ~30% a mais de vagas que unidades
-    const mockSpaces = generateMockSpaces(Math.floor(totalSpacesNeeded));
     
-    // Gera unidades com histórico baseado nas vagas reais
-    const mockUnits = generateMockUnits(unitCount, mockSpaces);
+    // Gera unidades primeiro para calcular solicitações reais
+    const mockUnits = generateMockUnits(unitCount, undefined);
     
-    loadMockData(mockUnits, mockSpaces);
+    // Calcula total de solicitações baseado nas unidades criadas
+    const totalRequests = mockUnits.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
+    
+    // Gera 20-30% a MAIS de vagas do que solicitações para garantir excesso
+    const extraSpaces = Math.floor(totalRequests * (0.2 + Math.random() * 0.1));
+    const totalSpaces = totalRequests + extraSpaces;
+    
+    const mockSpaces = generateMockSpaces(totalSpaces);
+    
+    // Agora sim, enriquece as unidades com histórico baseado nas vagas reais
+    const enrichedUnits = generateMockUnits(unitCount, mockSpaces);
+    
+    loadMockData(enrichedUnits, mockSpaces);
   };
 
   const handleStartRaffle = async () => {
