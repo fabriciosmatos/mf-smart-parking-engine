@@ -78,7 +78,16 @@ export const useCSVData = () => {
   const loadMockData = (mockUnits: Unit[], mockSpaces: ParkingSpace[]) => {
     setUnits(mockUnits);
     setSpaces(mockSpaces);
-    setCurrentAllocations([]); // Mock data já vem com previousAssignment
+    
+    // Gera alocações atuais a partir das unidades que têm previousAssignment
+    const allocations: CurrentAllocation[] = mockUnits
+      .filter(u => u.previousAssignment)
+      .map(u => ({
+        idUnidade: u.id,
+        idVaga: u.previousAssignment!.spaceId
+      }));
+    
+    setCurrentAllocations(allocations);
 
     const uCsv = "id;apartamento;bloco;vagas_carro;vagas_moto;pcd;idoso;inadimplente;presente\n" +
       mockUnits.map(u => 
@@ -90,9 +99,13 @@ export const useCSVData = () => {
         `${s.id};${s.number};${s.type};${s.coverage};${s.access};${s.isPCD};${s.isElderly};${s.isCritical};${s.isNearElevator};${s.isNearEntrance};${s.block}`
       ).join('\n');
 
+    const aCsv = allocations.length > 0
+      ? "id_unidade;id_vaga\n" + allocations.map(a => `${a.idUnidade};${a.idVaga}`).join('\n')
+      : "";
+
     setRawUnitsCsv(uCsv);
     setRawSpacesCsv(sCsv);
-    setRawAllocationsCSV(""); // Não precisa para mock
+    setRawAllocationsCSV(aCsv);
   };
 
   return {
