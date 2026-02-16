@@ -37,7 +37,6 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
       const spaceRight = window.innerWidth - rect.right;
       const spaceLeft = rect.left;
       const spaceTop = rect.top;
-      const spaceBottom = window.innerHeight - rect.bottom;
 
       // Escolhe a posição com mais espaço
       if (spaceRight > 350) {
