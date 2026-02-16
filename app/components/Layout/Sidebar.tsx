@@ -26,8 +26,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeStep }) => {
         </div>
       </div>
 
-      <nav className="flex-1 p-6 pb-8 mt-4 relative flex flex-col">
-        <div className="space-y-2 pb-6">
+      <nav className="flex-1 p-6 mt-4 relative flex flex-col overflow-hidden">
+        <div className="space-y-2">
           {STEPS.map((step, index) => (
             <React.Fragment key={step.id}>
               <div
