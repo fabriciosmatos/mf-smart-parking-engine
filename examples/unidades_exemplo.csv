@@ -1,0 +1,11 @@
+id;apartamento;bloco;vagas_carro;vagas_moto;pcd;idoso;inadimplente;presente
+u-1;101A;B1;1;0;false;false;false;true
+u-2;102B;B1;2;0;false;true;false;true
+u-3;103C;B1;1;1;true;false;false;true
+u-4;201A;B2;1;0;false;false;true;false
+u-5;202B;B2;1;0;false;false;false;true
+u-6;203C;B2;1;0;false;false;false;true
+u-7;301A;B3;2;0;false;false;false;true
+u-8;302B;B3;1;1;false;true;false;true
+u-9;303C;B3;1;0;true;false;false;true
+u-10;401A;B4;1;0;false;false;false;false
