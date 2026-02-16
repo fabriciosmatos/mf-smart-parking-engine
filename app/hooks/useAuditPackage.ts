@@ -19,23 +19,31 @@ export const useAuditPackage = () => {
    * Cria um arquivo ZIP contendo:
    * 1. entrada_unidades.csv - Dados de entrada das unidades
    * 2. entrada_vagas.csv - Dados de entrada das vagas
-   * 3. 1_Mapa_Final_Garagem.csv - Mapeamento final apto→vaga
-   * 4. 2_Relatorio_Justificativa.json - Explicação detalhada por unidade
-   * 5. 3_Log_Auditoria.txt - Log completo passo a passo
-   * 6. 4_Certificado_Conformidade.json - Certificado com hash e métricas
+   * 3. entrada_alocacoes_atuais.csv - Histórico de alocações anteriores (se houver)
+   * 4. 1_Mapa_Final_Garagem.csv - Mapeamento final apto→vaga
+   * 5. 2_Relatorio_Justificativa.json - Explicação detalhada por unidade
+   * 6. 3_Log_Auditoria.txt - Log completo passo a passo
+   * 7. 4_Certificado_Conformidade.json - Certificado com hash e métricas
    */
   const generateAuditPackage = async (
     result: RaffleResult,
     units: Unit[],
     spaces: ParkingSpace[],
     rawUnitsCsv: string,
-    rawSpacesCsv: string
+    rawSpacesCsv: string,
+    rawAllocationsCSV?: string
   ): Promise<void> => {
     try {
       const zip = new JSZip();
 
+      // Inputs originais
       zip.file('entrada_unidades.csv', rawUnitsCsv);
       zip.file('entrada_vagas.csv', rawSpacesCsv);
+      
+      // Alocações atuais (opcional - apenas se foi fornecido)
+      if (rawAllocationsCSV && rawAllocationsCSV.trim().length > 0) {
+        zip.file('entrada_alocacoes_atuais.csv', rawAllocationsCSV);
+      }
 
       const mapContent = "Apto;Bloco;Vaga;Score;Atributos\n" + 
         result.assignments.map(a => {

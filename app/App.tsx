@@ -18,7 +18,8 @@ const App: React.FC = () => {
     spaces,
     allocationsCount,
     rawUnitsCsv, 
-    rawSpacesCsv, 
+    rawSpacesCsv,
+    rawAllocationsCSV,
     handleFileUpload, 
     loadMockData 
   } = useCSVData();
@@ -51,14 +52,14 @@ const App: React.FC = () => {
     if (raffleResult) {
       setStep(4);
       setTimeout(() => {
-        generateAuditPackage(raffleResult, units, spaces, rawUnitsCsv, rawSpacesCsv);
+        generateAuditPackage(raffleResult, units, spaces, rawUnitsCsv, rawSpacesCsv, rawAllocationsCSV);
       }, 800);
     }
   };
 
   const handleDownloadAudit = () => {
     if (result) {
-      generateAuditPackage(result, units, spaces, rawUnitsCsv, rawSpacesCsv);
+      generateAuditPackage(result, units, spaces, rawUnitsCsv, rawSpacesCsv, rawAllocationsCSV);
     }
   };
 
