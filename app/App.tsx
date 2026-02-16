@@ -62,6 +62,7 @@ const App: React.FC = () => {
           unitsCount={units.length}
           spacesCount={spaces.length}
           allocationsCount={allocationsCount}
+          units={units}
           onFileUpload={handleFileUpload}
           onGenerateMock={handleGenerateMock}
           onNext={() => setStep(2)}
@@ -82,6 +83,8 @@ const App: React.FC = () => {
         <SimulationStep
           isRaffling={isRaffling}
           onStartRaffle={handleStartRaffle}
+          units={units}
+          spaces={spaces}
         />
       )}
 

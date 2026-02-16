@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button } from '../ui/Button';
 import { FileUploadZone } from '../ui/FileUploadZone';
+import { Unit } from '../../types';
 
 interface DataIngestionStepProps {
   unitsCount: number;
   spacesCount: number;
   allocationsCount: number;
+  units: Unit[];
   onFileUpload: (file: File | undefined, type: 'units' | 'spaces' | 'allocations') => void;
   onGenerateMock: () => void;
   onNext: () => void;
@@ -15,10 +17,16 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
   unitsCount,
   spacesCount,
   allocationsCount,
+  units,
   onFileUpload,
   onGenerateMock,
   onNext
 }) => {
+  // Calcula solicitações totais
+  const totalRequests = units.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
+  const hasInventoryIssue = totalRequests > spacesCount;
+  const canProceed = unitsCount > 0 && spacesCount > 0 && !hasInventoryIssue;
+
   return (
     <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-200 animate-fadeIn overflow-x-hidden max-w-full">
       <div className="flex justify-between items-center mb-8">
@@ -46,6 +54,37 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
           </button>
         </div>
       </div>
+
+      {hasInventoryIssue && (
+        <div className="mb-6 bg-red-50 border-2 border-red-200 rounded-2xl p-5">
+          <div className="flex items-start gap-3">
+            <i className="fa-solid fa-triangle-exclamation text-2xl text-red-600 mt-1"></i>
+            <div className="flex-1">
+              <h3 className="font-black text-red-900 mb-2">⚠️ Déficit de Inventário Detectado</h3>
+              <p className="text-sm text-red-800 mb-3">
+                O número de vagas solicitadas <strong>({totalRequests})</strong> é maior que o número de vagas disponíveis <strong>({spacesCount})</strong>.
+              </p>
+              <div className="bg-white rounded-lg p-3 text-xs font-mono">
+                <div className="flex justify-between mb-1">
+                  <span className="text-slate-600">Solicitações (carSpaces + motoSpaces):</span>
+                  <span className="font-black text-red-600">{totalRequests}</span>
+                </div>
+                <div className="flex justify-between mb-1">
+                  <span className="text-slate-600">Vagas disponíveis:</span>
+                  <span className="font-black text-slate-900">{spacesCount}</span>
+                </div>
+                <div className="border-t pt-1 mt-1 flex justify-between">
+                  <span className="text-slate-600">Faltam:</span>
+                  <span className="font-black text-red-600">{totalRequests - spacesCount} vagas</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-600 mt-3 italic">
+                💡 Solução: Recarregue o arquivo de vagas com mais registros ou reduza as solicitações no arquivo de unidades.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-3 gap-6 mb-8">
         {/* Upload 1 - Obrigatório */}
@@ -137,8 +176,18 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
               <i className="fa-solid fa-exclamation-triangle mr-1"></i>
               Carregue pelo menos Unidades e Vagas
             </p>
-          ) : null}
-          <Button disabled={unitsCount === 0 || spacesCount === 0} onClick={onNext}>
+          ) : hasInventoryIssue ? (
+            <p className="text-sm text-red-600 font-bold">
+              <i className="fa-solid fa-xmark-circle mr-1"></i>
+              Corrija o déficit de vagas antes de prosseguir
+            </p>
+          ) : (
+            <p className="text-sm text-emerald-600 font-medium">
+              <i className="fa-solid fa-circle-check mr-1"></i>
+              Dados válidos ({totalRequests} solicitações ≤ {spacesCount} vagas)
+            </p>
+          )}
+          <Button disabled={!canProceed} onClick={onNext}>
             Configurar Regras <i className="fa-solid fa-arrow-right ml-2"></i>
           </Button>
         </div>
