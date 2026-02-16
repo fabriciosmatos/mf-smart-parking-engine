@@ -128,13 +128,13 @@ export function runVehicleTypeValidationTests() {
     
     const { carRequests, motoRequests } = countRequestsByType(units);
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       carRequests,
       5, // 1+1+2+0+0+1 = 5
       'Deve somar corretamente solicitações de CARRO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       motoRequests,
       4, // 0+0+0+1+2+1 = 4
       'Deve somar corretamente solicitações de MOTO'
@@ -168,13 +168,13 @@ export function runVehicleTypeValidationTests() {
     
     const { carSpaces, motoSpaces } = countSpacesByType(spaces);
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       carSpaces,
       4, // P+M+G+P = 4
       'Deve somar corretamente vagas de CARRO (P, M, G)'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       motoSpaces,
       2, // MOTO+MOTO = 2
       'Deve somar corretamente vagas de MOTO'
@@ -232,13 +232,13 @@ export function runVehicleTypeValidationTests() {
       'Inventário perfeito NÃO deve ter déficit de MOTO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.carRequests,
       validation.carSpaces,
       'Solicitações de CARRO devem ser iguais a vagas de CARRO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.motoRequests,
       validation.motoSpaces,
       'Solicitações de MOTO devem ser iguais a vagas de MOTO'
@@ -297,19 +297,19 @@ export function runVehicleTypeValidationTests() {
       'NÃO deve detectar déficit de MOTO (motos estão OK)'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.carRequests,
       15,
       'Deve contar 15 solicitações de CARRO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.carSpaces,
       10,
       'Deve contar 10 vagas de CARRO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.carDeficit,
       -5, // Faltam 5
       'Déficit de CARRO deve ser -5'
@@ -368,19 +368,19 @@ export function runVehicleTypeValidationTests() {
       'Deve detectar déficit de MOTO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.motoRequests,
       12,
       'Deve contar 12 solicitações de MOTO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.motoSpaces,
       8,
       'Deve contar 8 vagas de MOTO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.motoDeficit,
       -4, // Faltam 4
       'Déficit de MOTO deve ser -4'
@@ -439,13 +439,13 @@ export function runVehicleTypeValidationTests() {
       'Deve detectar déficit de MOTO'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.carDeficit,
       -5, // Faltam 5 carros
       'Déficit de CARRO deve ser -5'
     );
     
-    Assert.assertEquals(
+    Assert.assertEqual(
       validation.motoDeficit,
       -5, // Faltam 5 motos
       'Déficit de MOTO deve ser -5'
