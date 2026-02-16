@@ -8,7 +8,7 @@ interface AuditHeaderProps {
 
 export const AuditHeader: React.FC<AuditHeaderProps> = ({ result, onDownload }) => {
   return (
-    <div className="bg-[#0f172a] text-white p-8 rounded-[2rem] shadow-2xl border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-8">
+    <div className="bg-[#0f172a] text-white p-6 md:p-8 rounded-[2rem] shadow-2xl border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-6 overflow-hidden">
       <div className="flex items-center gap-6 shrink-0">
         <div className="w-14 h-14 bg-indigo-600/20 rounded-2xl flex items-center justify-center border border-indigo-500/30">
           <i className="fa-solid fa-shield-halved text-2xl text-indigo-400"></i>
@@ -23,8 +23,8 @@ export const AuditHeader: React.FC<AuditHeaderProps> = ({ result, onDownload }) 
           </div>
         </div>
       </div>
-      <div className="flex-1 flex flex-col md:flex-row items-center gap-12 w-full">
-        <div className="w-full md:flex-1">
+      <div className="flex-1 flex flex-col md:flex-row items-center gap-6 md:gap-8 w-full max-w-full min-w-0">
+        <div className="w-full md:flex-1 min-w-0">
           <span className="text-[8px] text-slate-500 block uppercase font-black mb-1 tracking-widest">
             Integridade SHA-16
           </span>

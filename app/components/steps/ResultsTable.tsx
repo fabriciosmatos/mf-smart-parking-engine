@@ -14,13 +14,12 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   spaces
 }) => {
   return (
-    <div className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-slate-200">
-      <div className="mb-10 flex justify-between items-end">
-        <div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight italic leading-none">
+    <div>
+      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">\n        <div>
+          <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight italic leading-none">
             Mapa de Ocupação Final
           </h2>
-          <p className="text-slate-500 font-medium italic mt-2">
+          <p className="text-slate-500 font-medium italic mt-2 text-sm">
             Passe o mouse sobre os ícones para ver detalhes de cada regra.
           </p>
         </div>
@@ -36,8 +35,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-inner max-h-[700px] overflow-y-auto custom-scrollbar">
-        <table className="w-full text-left text-sm min-w-[1000px] border-separate border-spacing-0">
+      <div className="overflow-x-auto rounded-3xl border border-slate-100 shadow-inner max-h-[700px] overflow-y-auto custom-scrollbar">\n        <table className="w-full text-left text-sm min-w-[1000px] border-separate border-spacing-0">
           <thead className="bg-slate-900 text-white sticky top-0 uppercase text-[10px] font-black z-20 tracking-widest">
             <tr>
               <th className="px-10 py-6">Unidade</th>
