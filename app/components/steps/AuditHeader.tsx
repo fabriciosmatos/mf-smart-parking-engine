@@ -17,15 +17,9 @@ export const AuditHeader: React.FC<AuditHeaderProps> = ({ result, onDownload }) 
         <div className="w-px h-6 bg-slate-700"></div>
         <span className="text-xs text-slate-400 whitespace-nowrap">Semente: <span className="text-indigo-400 font-bold font-mono">{result.seed}</span></span>
         <div className="w-px h-6 bg-slate-700"></div>
-        <code className="text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-emerald-400 font-mono truncate max-w-xs">
-          {result.hash}
-        </code>
-        <button
-          onClick={onDownload}
-          className="ml-auto px-4 py-2 bg-indigo-600 rounded-xl font-bold text-xs shadow-lg hover:bg-indigo-500 transition-all flex items-center gap-2 whitespace-nowrap"
-        >
-          <i className="fa-solid fa-file-zipper"></i> 
-          <span>Download</span>
+        <code className="text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-emerald-400 font-mono truncate max-w-xs">{result.hash}</code>
+        <button onClick={onDownload} className="ml-auto px-4 py-2 bg-indigo-600 rounded-xl font-bold text-xs shadow-lg hover:bg-indigo-500 transition-all flex items-center gap-2 whitespace-nowrap">
+          <i className="fa-solid fa-file-zipper"></i><span>Download</span>
         </button>
       </div>
     </div>
