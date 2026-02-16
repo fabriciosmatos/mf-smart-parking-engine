@@ -181,8 +181,13 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
               <i className="fa-solid fa-xmark-circle mr-1"></i>
               Corrija o déficit de vagas antes de prosseguir
             </p>
-          ) : (
+          ) : totalRequests === spacesCount ? (
             <p className="text-sm text-emerald-600 font-medium">
+              <i className="fa-solid fa-circle-check mr-1"></i>
+              Perfeito! {totalRequests} solicitações = {spacesCount} vagas
+            </p>
+          ) : (
+            <p className="text-sm text-blue-600 font-medium">
               <i className="fa-solid fa-circle-check mr-1"></i>
               Dados válidos ({totalRequests} solicitações ≤ {spacesCount} vagas)
             </p>

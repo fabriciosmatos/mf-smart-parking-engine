@@ -69,15 +69,21 @@ export const SimulationStep: React.FC<SimulationStepProps> = ({
             Cruzando inventário físico com demandas prioritárias para garantir equidade.
           </p>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="bg-slate-50 px-6 py-3 rounded-xl">
+            <div className={`px-6 py-3 rounded-xl ${totalRequests === totalSpaces ? 'bg-emerald-50' : 'bg-slate-50'}`}>
               <span className="text-slate-500 block mb-1">Solicitações</span>
-              <span className="font-black text-2xl text-slate-900">{totalRequests}</span>
+              <span className={`font-black text-2xl ${totalRequests === totalSpaces ? 'text-emerald-600' : 'text-slate-900'}`}>{totalRequests}</span>
             </div>
-            <div className="bg-emerald-50 px-6 py-3 rounded-xl">
+            <div className={`px-6 py-3 rounded-xl ${totalRequests === totalSpaces ? 'bg-emerald-50' : 'bg-emerald-50'}`}>
               <span className="text-slate-500 block mb-1">Vagas Disponíveis</span>
               <span className="font-black text-2xl text-emerald-600">{totalSpaces}</span>
             </div>
           </div>
+          {totalRequests === totalSpaces && (
+            <p className="text-xs text-emerald-600 font-bold mt-3 flex items-center justify-center gap-2">
+              <i className="fa-solid fa-check-double"></i>
+              Inventário perfeito: 100% de aproveitamento
+            </p>
+          )}
         </div>
       )}
       
