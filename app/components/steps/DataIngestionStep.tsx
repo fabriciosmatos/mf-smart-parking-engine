@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button } from '../ui/Button';
 import { FileUploadZone } from '../ui/FileUploadZone';
-import { Unit } from '../../types';
+import { Unit, ParkingSpace } from '../../types';
 
 interface DataIngestionStepProps {
   unitsCount: number;
   spacesCount: number;
   allocationsCount: number;
   units: Unit[];
+  spaces: ParkingSpace[];
   onFileUpload: (file: File | undefined, type: 'units' | 'spaces' | 'allocations') => void;
   onGenerateMock: () => void;
   onNext: () => void;
@@ -18,13 +19,28 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
   spacesCount,
   allocationsCount,
   units,
+  spaces,
   onFileUpload,
   onGenerateMock,
   onNext
 }) => {
-  // Calcula solicitações totais
-  const totalRequests = units.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
-  const hasInventoryIssue = totalRequests > spacesCount;
+  // Calcula solicitações por tipo
+  const { carRequests, motoRequests } = useMemo(() => {
+    const carRequests = units.reduce((acc, u) => acc + u.carSpaces, 0);
+    const motoRequests = units.reduce((acc, u) => acc + u.motoSpaces, 0);
+    return { carRequests, motoRequests };
+  }, [units]);
+
+  // Conta vagas por tipo
+  const { carSpaces, motoSpaces } = useMemo(() => {
+    const carSpaces = spaces.filter(s => s.type !== 'MOTO').length;
+    const motoSpaces = spaces.filter(s => s.type === 'MOTO').length;
+    return { carSpaces, motoSpaces };
+  }, [spaces]);
+
+  const hasCarDeficit = carRequests > carSpaces;
+  const hasMotoDeficit = motoRequests > motoSpaces;
+  const hasInventoryIssue = hasCarDeficit || hasMotoDeficit;
   const canProceed = unitsCount > 0 && spacesCount > 0 && !hasInventoryIssue;
 
   return (
@@ -62,24 +78,57 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
             <div className="flex-1">
               <h3 className="font-black text-red-900 mb-2">⚠️ Déficit de Inventário Detectado</h3>
               <p className="text-sm text-red-800 mb-3">
-                O número de vagas solicitadas <strong>({totalRequests})</strong> é maior que o número de vagas disponíveis <strong>({spacesCount})</strong>.
+                {hasCarDeficit && hasMotoDeficit 
+                  ? "Déficit em vagas de CARRO e MOTO detectado."
+                  : hasCarDeficit 
+                    ? "Déficit em vagas de CARRO detectado."
+                    : "Déficit em vagas de MOTO detectado."}
               </p>
-              <div className="bg-white rounded-lg p-3 text-xs font-mono">
-                <div className="flex justify-between mb-1">
-                  <span className="text-slate-600">Solicitações (carSpaces + motoSpaces):</span>
-                  <span className="font-black text-red-600">{totalRequests}</span>
+              <div className="bg-white rounded-lg p-3 text-xs font-mono space-y-3">
+                {/* Vagas de Carro */}
+                <div className={hasCarDeficit ? 'opacity-100' : 'opacity-60'}>
+                  <div className="font-bold text-slate-700 mb-1 flex items-center gap-2">
+                    <i className="fa-solid fa-car"></i> Vagas de CARRO (P, M, G)
+                  </div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-600">Solicitações:</span>
+                    <span className={`font-black ${hasCarDeficit ? 'text-red-600' : 'text-slate-900'}`}>{carRequests}</span>
+                  </div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-600">Vagas disponíveis:</span>
+                    <span className="font-black text-slate-900">{carSpaces}</span>
+                  </div>
+                  {hasCarDeficit && (
+                    <div className="border-t pt-1 mt-1 flex justify-between">
+                      <span className="text-slate-600">Faltam:</span>
+                      <span className="font-black text-red-600">{carRequests - carSpaces} vagas</span>
+                    </div>
+                  )}
                 </div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-slate-600">Vagas disponíveis:</span>
-                  <span className="font-black text-slate-900">{spacesCount}</span>
-                </div>
-                <div className="border-t pt-1 mt-1 flex justify-between">
-                  <span className="text-slate-600">Faltam:</span>
-                  <span className="font-black text-red-600">{totalRequests - spacesCount} vagas</span>
+
+                {/* Vagas de Moto */}
+                <div className={hasMotoDeficit ? 'opacity-100' : 'opacity-60'}>
+                  <div className="font-bold text-slate-700 mb-1 flex items-center gap-2">
+                    <i className="fa-solid fa-motorcycle"></i> Vagas de MOTO
+                  </div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-600">Solicitações:</span>
+                    <span className={`font-black ${hasMotoDeficit ? 'text-red-600' : 'text-slate-900'}`}>{motoRequests}</span>
+                  </div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-600">Vagas disponíveis:</span>
+                    <span className="font-black text-slate-900">{motoSpaces}</span>
+                  </div>
+                  {hasMotoDeficit && (
+                    <div className="border-t pt-1 mt-1 flex justify-between">
+                      <span className="text-slate-600">Faltam:</span>
+                      <span className="font-black text-red-600">{motoRequests - motoSpaces} vagas</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <p className="text-xs text-slate-600 mt-3 italic">
-                💡 Solução: Recarregue o arquivo de vagas com mais registros ou reduza as solicitações no arquivo de unidades.
+                💡 Solução: Adicione mais vagas do tipo correto no arquivo de vagas ou reduza as solicitações.
               </p>
             </div>
           </div>
@@ -181,15 +230,15 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
               <i className="fa-solid fa-xmark-circle mr-1"></i>
               Corrija o déficit de vagas antes de prosseguir
             </p>
-          ) : totalRequests === spacesCount ? (
+          ) : carRequests === carSpaces && motoRequests === motoSpaces ? (
             <p className="text-sm text-emerald-600 font-medium">
               <i className="fa-solid fa-circle-check mr-1"></i>
-              Perfeito! {totalRequests} solicitações = {spacesCount} vagas
+              Perfeito! Carro: {carRequests}={carSpaces} | Moto: {motoRequests}={motoSpaces}
             </p>
           ) : (
             <p className="text-sm text-blue-600 font-medium">
               <i className="fa-solid fa-circle-check mr-1"></i>
-              Dados válidos ({totalRequests} solicitações ≤ {spacesCount} vagas)
+              Válido - Carro: {carRequests}/{carSpaces} | Moto: {motoRequests}/{motoSpaces}
             </p>
           )}
           <Button disabled={!canProceed} onClick={onNext}>

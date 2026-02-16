@@ -34,11 +34,28 @@ const App: React.FC = () => {
     // Gera unidades UMA VEZ (sem histórico ainda)
     const mockUnits = generateMockUnits(unitCount, undefined);
     
-    // Calcula total de solicitações baseado nas unidades criadas
-    const totalRequests = mockUnits.reduce((acc, u) => acc + u.carSpaces + u.motoSpaces, 0);
+    // Calcula solicitações por tipo
+    const carRequests = mockUnits.reduce((acc, u) => acc + u.carSpaces, 0);
+    const motoRequests = mockUnits.reduce((acc, u) => acc + u.motoSpaces, 0);
+    const totalRequests = carRequests + motoRequests;
     
-    // Gera EXATAMENTE o mesmo número de vagas que solicitações
+    // Gera vagas: EXATAMENTE carRequests vagas de carro + motoRequests vagas de moto
     const mockSpaces = generateMockSpaces(totalRequests);
+    
+    // Ajusta tipos de vaga para garantir quantidade exata
+    let carCount = 0;
+    let motoCount = 0;
+    mockSpaces.forEach((space) => {
+      if (motoCount < motoRequests) {
+        space.type = 'MOTO';
+        motoCount++;
+      } else if (carCount < carRequests) {
+        // Distribui entre P, M, G
+        const carTypes: ('P' | 'M' | 'G')[] = ['P', 'M', 'G'];
+        space.type = carTypes[Math.floor(Math.random() * 3)];
+        carCount++;
+      }
+    });
     
     // Enriquece as MESMAS unidades com histórico baseado nas vagas reais
     const enrichedUnits = mockUnits.map(unit => {
@@ -83,6 +100,7 @@ const App: React.FC = () => {
           spacesCount={spaces.length}
           allocationsCount={allocationsCount}
           units={units}
+          spaces={spaces}
           onFileUpload={handleFileUpload}
           onGenerateMock={handleGenerateMock}
           onNext={() => setStep(2)}
