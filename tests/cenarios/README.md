@@ -96,6 +96,12 @@ Situações raras, limites do sistema, validação de robustez.
   - Testa fallback para sorteio geral
   - Expectativa: Prioritários conseguem vagas no geral
 
+- **validacao-tipo-vaga.scenario.js** ⭐ **NOVO**
+  - Suite completa de validação CARRO vs MOTO
+  - 5 sub-cenários: déficit carro, déficit moto, déficit duplo, perfeito, excesso
+  - Testa incompatibilidade de tipos (carros não usam vagas moto)
+  - Expectativa: Validação bloqueia sorteio quando há déficit por tipo
+
 ---
 
 ### 🔁 **sequence/** - Sequências

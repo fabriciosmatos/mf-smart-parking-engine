@@ -14,6 +14,7 @@
 import { runCompensationRulesTests } from './unitarios/regrasCompensacao.test.js';
 import { runPenaltyAndRotationTests } from './unitarios/regrasPenalidades.test.js';
 import { runProximityAndPriorityTests } from './unitarios/regrasProximidade.test.js';
+import { runVehicleTypeValidationTests } from './unitarios/validacaoTipoVaga.test.js';
 import { runFairnessSimulations } from './simulacao/justica.test.js';
 
 // Cores para terminal (ANSI)
@@ -180,9 +181,10 @@ async function main() {
     const unitTest1 = runCompensationRulesTests();
     const unitTest2 = runPenaltyAndRotationTests();
     const unitTest3 = runProximityAndPriorityTests();
+    const unitTest4 = runVehicleTypeValidationTests();
     
-    results.unit.passed = unitTest1.passed + unitTest2.passed + unitTest3.passed;
-    results.unit.failed = unitTest1.failed + unitTest2.failed + unitTest3.failed;
+    results.unit.passed = unitTest1.passed + unitTest2.passed + unitTest3.passed + unitTest4.passed;
+    results.unit.failed = unitTest1.failed + unitTest2.failed + unitTest3.failed + unitTest4.failed;
     results.unit.total = results.unit.passed + results.unit.failed;
     
     // ============================================
