@@ -12,7 +12,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeStep }) => {
   const currentStep = STEPS.find(s => s.id === activeStep);
 
   return (
-    <div className="flex h-full w-full bg-[#f1f5f9] overflow-hidden">
+    <div className="flex h-full w-full bg-[#f1f5f9]">
       <Sidebar activeStep={activeStep} />
 
       <main className="flex-1 flex flex-col">

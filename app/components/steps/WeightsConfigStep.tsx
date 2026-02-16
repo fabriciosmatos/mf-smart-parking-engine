@@ -23,7 +23,7 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl border border-slate-200 overflow-visible">
+      <div className="bg-white p-10 rounded-3xl shadow-2xl border border-slate-200">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
           <div>
             <h2 className="text-4xl font-black text-slate-900 tracking-tight italic">
@@ -51,7 +51,7 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-visible pt-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Object.entries(config.weights).map(([key, value]) => {
             const info = WEIGHT_INFO[key];
             const isPenalty = key.includes('Penalty');
