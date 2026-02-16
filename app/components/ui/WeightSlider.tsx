@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 interface WeightSliderProps {
   weightKey: string;
@@ -28,8 +28,71 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
   onMouseLeave,
   onChange
 }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<'top' | 'right' | 'bottom' | 'left'>('top');
+
+  useEffect(() => {
+    if (isTooltipActive && cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const spaceRight = window.innerWidth - rect.right;
+      const spaceLeft = rect.left;
+      const spaceTop = rect.top;
+      const spaceBottom = window.innerHeight - rect.bottom;
+
+      // Escolhe a posição com mais espaço
+      if (spaceRight > 350) {
+        setTooltipPosition('right');
+      } else if (spaceLeft > 350) {
+        setTooltipPosition('left');
+      } else if (spaceTop > 300) {
+        setTooltipPosition('top');
+      } else {
+        setTooltipPosition('bottom');
+      }
+    }
+  }, [isTooltipActive]);
+
+  const getTooltipClasses = () => {
+    switch (tooltipPosition) {
+      case 'right':
+        return 'left-full top-0 ml-4';
+      case 'left':
+        return 'right-full top-0 mr-4';
+      case 'bottom':
+        return 'top-full left-1/2 -translate-x-1/2 mt-4';
+      default: // top
+        return 'bottom-full left-1/2 -translate-x-1/2 mb-4';
+    }
+  };
+
+  const getArrowClasses = () => {
+    switch (tooltipPosition) {
+      case 'right':
+        return 'absolute right-full top-6 mr-[-1px]';
+      case 'left':
+        return 'absolute left-full top-6 ml-[-1px]';
+      case 'bottom':
+        return 'absolute bottom-full left-1/2 -translate-x-1/2 mb-[-1px]';
+      default: // top
+        return 'absolute top-full left-1/2 -translate-x-1/2 mt-[-1px]';
+    }
+  };
+
+  const getArrow = () => {
+    switch (tooltipPosition) {
+      case 'right':
+        return <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-slate-900"></div>;
+      case 'left':
+        return <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[8px] border-l-slate-900"></div>;
+      case 'bottom':
+        return <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-slate-900"></div>;
+      default: // top
+        return <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-slate-900"></div>;
+    }
+  };
+
   return (
-    <div className="group relative flex flex-col bg-slate-50 p-6 rounded-[2rem] border border-slate-100 hover:border-indigo-400/50 hover:bg-white hover:shadow-2xl transition-all duration-300 overflow-visible">
+    <div ref={cardRef} className="group relative flex flex-col bg-slate-50 p-6 rounded-[2rem] border border-slate-100 hover:border-indigo-400/50 hover:bg-white hover:shadow-2xl transition-all duration-300">
       <div className="flex justify-between items-start mb-6">
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3 ${
           isPenalty ? 'bg-rose-500 text-white shadow-rose-200' : 'bg-indigo-600 text-white shadow-indigo-200'
@@ -59,10 +122,10 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
         </div>
 
         {isTooltipActive && (
-          <div className="absolute z-[9999] left-full top-0 ml-4 w-80 bg-slate-900 text-white p-6 rounded-2xl text-xs shadow-2xl border border-slate-700 animate-fadeIn">
-            {/* Seta apontando para esquerda */}
-            <div className="absolute right-full top-6 mr-[-1px]">
-              <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-r-[8px] border-r-slate-900"></div>
+          <div className={`absolute z-[9999] w-80 bg-slate-900 text-white p-6 rounded-2xl text-xs shadow-2xl border border-slate-700 animate-fadeIn ${getTooltipClasses()}`}>
+            {/* Seta dinâmica */}
+            <div className={getArrowClasses()}>
+              {getArrow()}
             </div>
             
             <p className="font-black mb-3 text-indigo-400 uppercase tracking-widest flex items-center gap-2 text-[10px]">
