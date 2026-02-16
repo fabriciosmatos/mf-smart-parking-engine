@@ -37,8 +37,6 @@ export function generateMockUnits(count: number, availableSpaces?: ParkingSpace[
     // Se temos vagas disponíveis, TODAS as unidades têm histórico (Vagas Atuais = 100%)
     let previousAssignment = undefined;
     if (availableSpaces && availableSpaces.length > 0) {
-      const hasBadHistory = Math.random() < 0.6; // 60% têm histórico ruim para testar compensação
-      
       const randomSpace = availableSpaces[Math.floor(Math.random() * availableSpaces.length)];
       
       previousAssignment = {
