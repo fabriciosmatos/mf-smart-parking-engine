@@ -29,7 +29,7 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
   onChange
 }) => {
   return (
-    <div className="group relative flex flex-col bg-slate-50 p-6 rounded-[2rem] border border-slate-100 hover:border-indigo-400/50 hover:bg-white hover:shadow-2xl transition-all duration-300">
+    <div className="group relative flex flex-col bg-slate-50 p-6 rounded-[2rem] border border-slate-100 hover:border-indigo-400/50 hover:bg-white hover:shadow-2xl transition-all duration-300 overflow-visible">
       <div className="flex justify-between items-start mb-6">
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3 ${
           isPenalty ? 'bg-rose-500 text-white shadow-rose-200' : 'bg-indigo-600 text-white shadow-indigo-200'
@@ -59,7 +59,7 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
         </div>
 
         {isTooltipActive && (
-          <div className="absolute z-50 bottom-full left-0 mb-4 w-72 bg-slate-900 text-white p-6 rounded-3xl text-[11px] shadow-2xl border border-slate-800 animate-fadeIn">
+          <div className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-4 w-72 bg-slate-900 text-white p-6 rounded-3xl text-[11px] shadow-2xl border border-slate-800 animate-fadeIn">
             <p className="font-black mb-3 text-indigo-400 uppercase tracking-widest flex items-center gap-2">
               <i className="fa-solid fa-circle-nodes"></i> Lógica de Decisão
             </p>
@@ -72,7 +72,7 @@ export const WeightSlider: React.FC<WeightSliderProps> = ({
                 <i className="fa-solid fa-caret-down mr-2"></i>{info.down}
               </p>
             </div>
-            <div className="absolute bottom-0 left-8 translate-y-full w-4 h-4 bg-slate-900 rotate-45 -mt-2"></div>
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-4 h-4 bg-slate-900 rotate-45 -mt-2"></div>
           </div>
         )}
       </div>
