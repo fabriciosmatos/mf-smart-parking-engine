@@ -24,7 +24,7 @@ export const SimulationStep: React.FC<SimulationStepProps> = ({
   const canStartRaffle = !hasInventoryDeficit && !isRaffling;
 
   return (
-    <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fadeIn px-6 pt-8">
+    <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-fadeIn px-6 pt-16">
       <div className={`w-32 h-32 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-8 border border-slate-100 ${
         isRaffling ? 'animate-spin-slow' : 'animate-float'
       }`}>
