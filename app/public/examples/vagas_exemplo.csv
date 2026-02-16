@@ -1,0 +1,13 @@
+id;numero;tipo;cobertura;acesso;pcd;idoso;critica;perto_elevador;perto_entrada;bloco
+s-1;001;P;COVERED;FREE;true;false;false;true;false;B1
+s-2;002;M;COVERED;FREE;false;true;false;true;false;B1
+s-3;003;G;UNCOVERED;LOCKED;false;false;true;false;true;B1
+s-4;004;MOTO;COVERED;FREE;false;false;false;false;false;B1
+s-5;101;P;COVERED;FREE;false;false;false;true;false;B2
+s-6;102;M;COVERED;FREE;false;false;false;true;false;B2
+s-7;103;G;UNCOVERED;FREE;false;false;false;false;true;B2
+s-8;104;MOTO;COVERED;FREE;false;false;false;false;false;B2
+s-9;201;P;COVERED;FREE;false;false;false;true;true;B3
+s-10;202;M;COVERED;LOCKED;false;false;false;true;false;B3
+s-11;203;G;UNCOVERED;FREE;false;false;true;false;true;B3
+s-12;301;P;COVERED;FREE;false;false;false;true;false;B4

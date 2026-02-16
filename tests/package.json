@@ -1,0 +1,26 @@
+{
+  "name": "smart-parking-engine-tests",
+  "version": "1.0.0",
+  "description": "Testes automatizados para Smart Parking Engine - Validação de regras de negócio e análise de fairness",
+  "type": "module",
+  "scripts": {
+    "test": "node runTests.js",
+    "test:unit": "node -e \"import('./unit/compensationRules.test.js').then(m => m.runCompensationRulesTests()); import('./unit/penaltyRules.test.js').then(m => m.runPenaltyAndRotationTests()); import('./unit/proximityRules.test.js').then(m => m.runProximityAndPriorityTests());\"",
+    "test:fairness": "node -e \"import('./simulation/fairness.test.js').then(m => m.runFairnessSimulations())\"",
+    "test:watch": "nodemon --watch . --exec 'npm test'",
+    "report": "node runTests.js > reports/test-report-$(date +%Y%m%d-%H%M%S).txt"
+  },
+  "keywords": [
+    "parking",
+    "lottery",
+    "fairness",
+    "testing",
+    "automation",
+    "business-rules"
+  ],
+  "author": "Smart Parking Engine Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
