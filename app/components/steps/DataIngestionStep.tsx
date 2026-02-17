@@ -243,7 +243,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
               <span className="sm:hidden">Válido ✓</span>
             </p>
           )}
-          <Botao disabled={!canProceed} onClick={onNext}>
+          <Botao disabled={!canProceed} aoClicar={onNext}>
             Configurar Regras <i className="fa-solid fa-arrow-right ml-2"></i>
           </Botao>
         </div>

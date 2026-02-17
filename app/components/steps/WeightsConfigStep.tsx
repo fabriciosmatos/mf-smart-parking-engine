@@ -66,7 +66,11 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
                 rotulo={label}
                 icone={icon}
                 ehPenalidade={isPenalty}
-                informacao={info}
+                informacao={{
+                  descricao: info.desc,
+                  aumentar: info.up,
+                  diminuir: info.down
+                }}
                 dicaAtivaTooltip={activeTooltip === key}
                 aoEntrarMouse={() => setActiveTooltip(key)}
                 aoSairMouse={() => setActiveTooltip(null)}
