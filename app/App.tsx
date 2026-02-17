@@ -93,7 +93,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout activeStep={step}>
+    <Layout passoAtivo={step}>
       {step === 1 && (
         <DataIngestionStep
           unitsCount={units.length}

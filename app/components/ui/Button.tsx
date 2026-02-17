@@ -11,7 +11,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props 
 }) => {
-  const baseStyles = "px-12 py-4 rounded-2xl font-black uppercase tracking-widest transition-all";
+  const baseStyles = "px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold sm:font-black uppercase tracking-wide sm:tracking-widest transition-all text-xs sm:text-sm";
   
   const variantStyles = {
     primary: "bg-slate-900 text-white disabled:opacity-30",

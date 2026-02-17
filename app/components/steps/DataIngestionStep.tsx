@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { Button } from '../ui/Button';
-import { FileUploadZone } from '../ui/FileUploadZone';
+import { Botao } from '../ui/Botao';
+import { ZonaUploadArquivo } from '../ui/ZonaUploadArquivo';
 import { Unit, ParkingSpace } from '../../types';
 
 interface DataIngestionStepProps {
@@ -44,27 +44,27 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
   const canProceed = unitsCount > 0 && spacesCount > 0 && !hasInventoryIssue;
 
   return (
-    <div className="bg-white p-10 rounded-3xl shadow-xl border border-slate-200 animate-fadeIn overflow-x-hidden max-w-full">
-      <div className="flex justify-between items-center mb-8">
+    <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 animate-fadeIn overflow-x-hidden max-w-full">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-3xl font-black text-slate-900 italic tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 italic tracking-tight">
             Carregar Dados
           </h2>
-          <p className="text-slate-500 font-medium italic">
+          <p className="text-sm sm:text-base text-slate-500 font-medium italic">
             Carregue os arquivos CSV com as informações do condomínio
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           <a
             href="/examples/unidades_exemplo.csv"
             download
-            className="px-6 py-3 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-all font-bold text-sm flex items-center justify-center min-w-[180px]"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-all font-bold text-xs sm:text-sm flex items-center justify-center"
           >
             <i className="fa-solid fa-download mr-2"></i>Baixar Exemplos
           </a>
           <button
             onClick={onGenerateMock}
-            className="px-6 py-3 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all font-bold text-sm flex items-center justify-center min-w-[200px]"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all font-bold text-xs sm:text-sm flex items-center justify-center"
           >
             <i className="fa-solid fa-wand-magic-sparkles mr-2"></i>Gerar Dados Aleatórios
           </button>
@@ -72,19 +72,19 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
       </div>
 
       {hasInventoryIssue && (
-        <div className="mb-6 bg-red-50 border-2 border-red-200 rounded-2xl p-5">
-          <div className="flex items-start gap-3">
-            <i className="fa-solid fa-triangle-exclamation text-2xl text-red-600 mt-1"></i>
+        <div className="mb-4 sm:mb-6 bg-red-50 border-2 border-red-200 rounded-xl sm:rounded-2xl p-3 sm:p-5">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <i className="fa-solid fa-triangle-exclamation text-lg sm:text-2xl text-red-600 mt-1"></i>
             <div className="flex-1">
-              <h3 className="font-black text-red-900 mb-2">⚠️ Déficit de Inventário Detectado</h3>
-              <p className="text-sm text-red-800 mb-3">
+              <h3 className="font-black text-sm sm:text-base text-red-900 mb-2">⚠️ Déficit de Inventário Detectado</h3>
+              <p className="text-xs sm:text-sm text-red-800 mb-3">
                 {hasCarDeficit && hasMotoDeficit 
                   ? "Déficit em vagas de CARRO e MOTO detectado."
                   : hasCarDeficit 
                     ? "Déficit em vagas de CARRO detectado."
                     : "Déficit em vagas de MOTO detectado."}
               </p>
-              <div className="bg-white rounded-lg p-3 text-xs font-mono space-y-3">
+              <div className="bg-white rounded-lg p-2 sm:p-3 text-xs font-mono space-y-2 sm:space-y-3">
                 {/* Vagas de Carro */}
                 <div className={hasCarDeficit ? 'opacity-100' : 'opacity-60'}>
                   <div className="font-bold text-slate-700 mb-1 flex items-center gap-2">
@@ -127,7 +127,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
                   )}
                 </div>
               </div>
-              <p className="text-xs text-slate-600 mt-3 italic">
+              <p className="text-xs text-slate-600 mt-2 sm:mt-3 italic">
                 💡 Solução: Adicione mais vagas do tipo correto no arquivo de vagas ou reduza as solicitações.
               </p>
             </div>
@@ -135,19 +135,19 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Upload 1 - Obrigatório */}
         <div className="flex flex-col">
           <div className="flex items-center gap-2 mb-3 h-7">
-            <span className="w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-            <span className="text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
+            <span className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">1</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
           </div>
-          <FileUploadZone
-            onFileSelect={(file) => onFileUpload(file, 'units')}
-            icon="fa-people-group"
-            title="Unidades"
-            loadedCount={unitsCount}
-            countLabel="UNIDADES"
+          <ZonaUploadArquivo
+            aoSelecionarArquivo={(file) => onFileUpload(file, 'units')}
+            icone="fa-people-group"
+            titulo="Unidades"
+            quantidadeCarregada={unitsCount}
+            rotuloQuantidade="UNIDADES"
           />
           <div className="text-xs text-slate-500 mt-2 italic min-h-[40px]">
             Lista de apartamentos do condomínio<br/>
@@ -158,15 +158,15 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
         {/* Upload 2 - Obrigatório */}
         <div className="flex flex-col">
           <div className="flex items-center gap-2 mb-3 h-7">
-            <span className="w-7 h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-            <span className="text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
+            <span className="w-6 h-6 sm:w-7 sm:h-7 bg-indigo-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">2</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
           </div>
-          <FileUploadZone
-            onFileSelect={(file) => onFileUpload(file, 'spaces')}
-            icon="fa-car-rear"
-            title="Vagas"
-            loadedCount={spacesCount}
-            countLabel="VAGAS"
+          <ZonaUploadArquivo
+            aoSelecionarArquivo={(file) => onFileUpload(file, 'spaces')}
+            icone="fa-car-rear"
+            titulo="Vagas"
+            quantidadeCarregada={spacesCount}
+            rotuloQuantidade="VAGAS"
           />
           <div className="text-xs text-slate-500 mt-2 italic min-h-[40px]">
             Lista de vagas disponíveis<br/>
@@ -177,15 +177,15 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
         {/* Upload 3 - Opcional */}
         <div className="flex flex-col">
           <div className="flex items-center gap-2 mb-3 h-7">
-            <span className="w-7 h-7 bg-slate-300 text-slate-600 rounded-full flex items-center justify-center text-sm font-bold">3</span>
-            <span className="text-sm font-bold text-slate-500">OPCIONAL</span>
+            <span className="w-6 h-6 sm:w-7 sm:h-7 bg-slate-300 text-slate-600 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">3</span>
+            <span className="text-xs sm:text-sm font-bold text-slate-500">OPCIONAL</span>
           </div>
-          <FileUploadZone
-            onFileSelect={(file) => onFileUpload(file, 'allocations')}
-            icon="fa-link"
-            title="Vagas Atuais"
-            loadedCount={allocationsCount}
-            countLabel="ALOCAÇÕES"
+          <ZonaUploadArquivo
+            aoSelecionarArquivo={(file) => onFileUpload(file, 'allocations')}
+            icone="fa-link"
+            titulo="Vagas Atuais"
+            quantidadeCarregada={allocationsCount}
+            rotuloQuantidade="ALOCAÇÕES"
           />
           <div className="mt-2 min-h-[40px]">
             <details>
@@ -210,40 +210,42 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
         </div>
       </div>
 
-      <div className="mt-10 flex justify-between items-center">
+      <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <a 
           href="/COMO_USAR.md" 
           target="_blank"
-          className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
+          className="text-xs sm:text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2"
         >
           <i className="fa-solid fa-circle-question"></i>
           Como preencher os arquivos CSV?
         </a>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
           {unitsCount === 0 || spacesCount === 0 ? (
-            <p className="text-sm text-amber-600 font-medium">
+            <p className="text-xs sm:text-sm text-amber-600 font-medium">
               <i className="fa-solid fa-exclamation-triangle mr-1"></i>
               Carregue pelo menos Unidades e Vagas
             </p>
           ) : hasInventoryIssue ? (
-            <p className="text-sm text-red-600 font-bold">
+            <p className="text-xs sm:text-sm text-red-600 font-bold">
               <i className="fa-solid fa-xmark-circle mr-1"></i>
               Corrija o déficit de vagas antes de prosseguir
             </p>
           ) : carRequests === carSpaces && motoRequests === motoSpaces ? (
-            <p className="text-sm text-emerald-600 font-medium">
+            <p className="text-xs sm:text-sm text-emerald-600 font-medium">
               <i className="fa-solid fa-circle-check mr-1"></i>
-              Perfeito! Carro: {carRequests}={carSpaces} | Moto: {motoRequests}={motoSpaces}
+              <span className="hidden sm:inline">Perfeito! Carro: {carRequests}={carSpaces} | Moto: {motoRequests}={motoSpaces}</span>
+              <span className="sm:hidden">Perfeito! Tudo certo ✓</span>
             </p>
           ) : (
-            <p className="text-sm text-blue-600 font-medium">
+            <p className="text-xs sm:text-sm text-blue-600 font-medium">
               <i className="fa-solid fa-circle-check mr-1"></i>
-              Válido - Carro: {carRequests}/{carSpaces} | Moto: {motoRequests}/{motoSpaces}
+              <span className="hidden sm:inline">Válido - Carro: {carRequests}/{carSpaces} | Moto: {motoRequests}/{motoSpaces}</span>
+              <span className="sm:hidden">Válido ✓</span>
             </p>
           )}
-          <Button disabled={!canProceed} onClick={onNext}>
+          <Botao disabled={!canProceed} onClick={onNext}>
             Configurar Regras <i className="fa-solid fa-arrow-right ml-2"></i>
-          </Button>
+          </Botao>
         </div>
       </div>
     </div>
