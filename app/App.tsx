@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Layout } from './components/Layout/Layout';
-import { DataIngestionStep } from './components/steps/DataIngestionStep';
-import { WeightsConfigStep } from './components/steps/WeightsConfigStep';
-import { SimulationStep } from './components/steps/SimulationStep';
-import { AuditStep } from './components/steps/AuditStep';
+import { PassoIngestao } from './components/steps/PassoIngestao';
+import { PassoConfiguracaoPesos } from './components/steps/PassoConfiguracaoPesos';
+import { PassoSimulacao } from './components/steps/PassoSimulacao';
+import { PassoAuditoria } from './components/steps/PassoAuditoria';
 import { useCSVData } from './hooks/useCSVData';
 import { useRaffleConfig } from './hooks/useRaffleConfig';
 import { useRaffleExecution } from './hooks/useRaffleExecution';
@@ -95,43 +95,43 @@ const App: React.FC = () => {
   return (
     <Layout passoAtivo={step}>
       {step === 1 && (
-        <DataIngestionStep
-          unitsCount={units.length}
-          spacesCount={spaces.length}
-          allocationsCount={allocationsCount}
-          units={units}
-          spaces={spaces}
-          onFileUpload={handleFileUpload}
-          onGenerateMock={handleGenerateMock}
-          onNext={() => setStep(2)}
+        <PassoIngestao
+          quantidadeUnidades={units.length}
+          quantidadeVagas={spaces.length}
+          quantidadeAlocacoes={allocationsCount}
+          unidades={units}
+          vagas={spaces}
+          aoUploadArquivo={handleFileUpload}
+          aoGerarDadosSimulados={handleGenerateMock}
+          aoProximo={() => setStep(2)}
         />
       )}
 
       {step === 2 && (
-        <WeightsConfigStep
-          config={config}
-          onUpdateWeight={updateWeight}
-          onUpdateSeed={updateSeed}
-          onBack={() => setStep(1)}
-          onNext={() => setStep(3)}
+        <PassoConfiguracaoPesos
+          configuracao={config}
+          aoAtualizarPeso={updateWeight}
+          aoAtualizarSemente={updateSeed}
+          aoVoltar={() => setStep(1)}
+          aoProximo={() => setStep(3)}
         />
       )}
 
       {step === 3 && (
-        <SimulationStep
-          isRaffling={isRaffling}
-          onStartRaffle={handleStartRaffle}
-          units={units}
-          spaces={spaces}
+        <PassoSimulacao
+          estaRodando={isRaffling}
+          aoIniciarSorteio={handleStartRaffle}
+          unidades={units}
+          vagas={spaces}
         />
       )}
 
       {step === 4 && result && (
-        <AuditStep
-          result={result}
-          units={units}
-          spaces={spaces}
-          onDownloadAudit={handleDownloadAudit}
+        <PassoAuditoria
+          resultado={result}
+          unidades={units}
+          vagas={spaces}
+          aoDownloadAuditoria={handleDownloadAudit}
         />
       )}
     </Layout>

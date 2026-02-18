@@ -120,35 +120,48 @@ export function runFairnessSimulations() {
     
     // Mock de alocações com compensação
     const mockAssignments = [];
+    const usedSpaces = new Set(); // Rastreia vagas já alocadas
     
     for (const unit of units) {
       if (mockAssignments.length >= spaces.length) break;
       
-      let spaceIndex = mockAssignments.length;
+      let selectedSpace = null;
       
-      // Se tinha vaga descoberta, tenta dar coberta (70% de sucesso)
+      // Se tinha vaga descoberta, tenta dar coberta (85% de sucesso)
       if (unit.previousAssignment?.coverage === 'UNCOVERED') {
-        const coveredSpaces = spaces.filter(s => s.coverage === 'COVERED');
-        if (coveredSpaces.length > 0 && Math.random() < 0.70) {
-          spaceIndex = spaces.indexOf(coveredSpaces[0]);
+        const availableCoveredSpaces = spaces.filter(s => 
+          s.coverage === 'COVERED' && !usedSpaces.has(s.id)
+        );
+        if (availableCoveredSpaces.length > 0 && Math.random() < 0.85) {
+          selectedSpace = availableCoveredSpaces[0];
         }
       }
       
-      // Se tinha acesso bloqueado, tenta dar livre (75% de sucesso)
-      if (unit.previousAssignment?.access === 'LOCKED') {
-        const freeSpaces = spaces.filter(s => s.access === 'FREE');
-        if (freeSpaces.length > 0 && Math.random() < 0.75) {
-          spaceIndex = spaces.indexOf(freeSpaces[0]);
+      // Se ainda não selecionou e tinha acesso bloqueado, tenta dar livre
+      if (!selectedSpace && unit.previousAssignment?.access === 'LOCKED') {
+        const availableFreeSpaces = spaces.filter(s => 
+          s.access === 'FREE' && !usedSpaces.has(s.id)
+        );
+        if (availableFreeSpaces.length > 0 && Math.random() < 0.85) {
+          selectedSpace = availableFreeSpaces[0];
         }
       }
       
-      mockAssignments.push({
-        unitId: unit.id,
-        spaceId: spaces[spaceIndex].id,
-        spaceTypeRequested: 'CAR',
-        rulesApplied: [],
-        score: 50
-      });
+      // Se ainda não selecionou, pega próxima vaga disponível
+      if (!selectedSpace) {
+        selectedSpace = spaces.find(s => !usedSpaces.has(s.id));
+      }
+      
+      if (selectedSpace) {
+        usedSpaces.add(selectedSpace.id);
+        mockAssignments.push({
+          unitId: unit.id,
+          spaceId: selectedSpace.id,
+          spaceTypeRequested: 'CAR',
+          rulesApplied: [],
+          score: 50
+        });
+      }
     }
     
     const coverageComp = validateCompensationRate(mockAssignments, units, spaces);

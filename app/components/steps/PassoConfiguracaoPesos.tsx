@@ -4,20 +4,20 @@ import { Botao } from '../ui/Botao';
 import { ControleDeslizantePeso } from '../ui/ControleDeslizantePeso';
 import { WEIGHT_TRANSLATIONS, WEIGHT_ICONS, WEIGHT_INFO } from '../../constants/weights';
 
-interface WeightsConfigStepProps {
-  config: RaffleConfig;
-  onUpdateWeight: (key: string, value: number) => void;
-  onUpdateSeed: (seed: string) => void;
-  onBack: () => void;
-  onNext: () => void;
+interface PropriedadesPassoConfiguracaoPesos {
+  configuracao: RaffleConfig;
+  aoAtualizarPeso: (key: string, value: number) => void;
+  aoAtualizarSemente: (seed: string) => void;
+  aoVoltar: () => void;
+  aoProximo: () => void;
 }
 
-export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
-  config,
-  onUpdateWeight,
-  onUpdateSeed,
-  onBack,
-  onNext
+export const PassoConfiguracaoPesos: React.FC<PropriedadesPassoConfiguracaoPesos> = ({
+  configuracao,
+  aoAtualizarPeso,
+  aoAtualizarSemente,
+  aoVoltar,
+  aoProximo
 }) => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
 
@@ -43,8 +43,8 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
               </label>
               <input
                 type="text"
-                value={config.seed}
-                onChange={(e) => onUpdateSeed(e.target.value)}
+                value={configuracao.seed}
+                onChange={(e) => aoAtualizarSemente(e.target.value)}
                 className="bg-transparent font-mono text-xs sm:text-sm outline-none w-24 sm:w-32 focus:text-indigo-300 transition-colors"
               />
             </div>
@@ -52,7 +52,7 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-          {Object.entries(config.weights).map(([key, value]) => {
+          {Object.entries(configuracao.weights).map(([key, value]) => {
             const info = WEIGHT_INFO[key];
             const isPenalty = key.includes('Penalty');
             const icon = WEIGHT_ICONS[key];
@@ -74,14 +74,14 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
                 dicaAtivaTooltip={activeTooltip === key}
                 aoEntrarMouse={() => setActiveTooltip(key)}
                 aoSairMouse={() => setActiveTooltip(null)}
-                aoMudar={(newValue) => onUpdateWeight(key, newValue)}
+                aoMudar={(newValue) => aoAtualizarPeso(key, newValue)}
               />
             );
           })}
         </div>
 
         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row justify-between items-start sm:items-center border-t border-slate-100 pt-6 sm:pt-10 gap-4">
-          <Botao variante="fantasma" aoClicar={onBack} className="flex items-center gap-3">
+          <Botao variante="fantasma" aoClicar={aoVoltar} className="flex items-center gap-3">
             <i className="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Voltar
           </Botao>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
@@ -89,7 +89,7 @@ export const WeightsConfigStep: React.FC<WeightsConfigStepProps> = ({
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Confirmação</p>
               <p className="text-xs font-bold text-slate-600 italic">Parâmetros prontos para simulação</p>
             </div>
-            <Botao variante="secundario" aoClicar={onNext}>
+            <Botao variante="secundario" aoClicar={aoProximo}>
               Simular Alocação <i className="fa-solid fa-chevron-right ml-3"></i>
             </Botao>
           </div>

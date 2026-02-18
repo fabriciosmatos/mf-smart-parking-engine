@@ -1,17 +1,17 @@
 import React from 'react';
 import { Assignment, Unit, ParkingSpace } from '../../types';
-import { ResultTableRow } from './ResultTableRow';
+import { LinhaResultados } from './LinhaResultados';
 
-interface ResultsTableProps {
-  assignments: Assignment[];
-  units: Unit[];
-  spaces: ParkingSpace[];
+interface PropriedadesTabelaResultados {
+  atribuicoes: Assignment[];
+  unidades: Unit[];
+  vagas: ParkingSpace[];
 }
 
-export const ResultsTable: React.FC<ResultsTableProps> = ({
-  assignments,
-  units,
-  spaces
+export const TabelaResultados: React.FC<PropriedadesTabelaResultados> = ({
+  atribuicoes,
+  unidades,
+  vagas
 }) => {
   return (
     <div className="max-w-full">
@@ -48,16 +48,16 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
-            {assignments.map((assignment, index) => {
-              const unit = units.find(u => u.id === assignment.unitId)!;
-              const space = spaces.find(s => s.id === assignment.spaceId)!;
+            {atribuicoes.map((atribuicao, index) => {
+              const unidade = unidades.find(u => u.id === atribuicao.unitId)!;
+              const vaga = vagas.find(s => s.id === atribuicao.spaceId)!;
 
               return (
-                <ResultTableRow
+                <LinhaResultados
                   key={index}
-                  unit={unit}
-                  space={space}
-                  assignment={assignment}
+                  unidade={unidade}
+                  vaga={vaga}
+                  atribuicao={atribuicao}
                 />
               );
             })}

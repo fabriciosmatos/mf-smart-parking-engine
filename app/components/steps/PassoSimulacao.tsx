@@ -1,42 +1,42 @@
 import React, { useMemo } from 'react';
 import { Unit, ParkingSpace } from '../../types';
 
-interface SimulationStepProps {
-  isRaffling: boolean;
-  onStartRaffle: () => void;
-  units: Unit[];
-  spaces: ParkingSpace[];
+interface PropriedadesPassoSimulacao {
+  estaRodando: boolean;
+  aoIniciarSorteio: () => void;
+  unidades: Unit[];
+  vagas: ParkingSpace[];
 }
 
-export const SimulationStep: React.FC<SimulationStepProps> = ({
-  isRaffling,
-  onStartRaffle,
-  units,
-  spaces
+export const PassoSimulacao: React.FC<PropriedadesPassoSimulacao> = ({
+  estaRodando,
+  aoIniciarSorteio,
+  unidades,
+  vagas
 }) => {
   // Calcula solicitações por tipo
   const { carRequests, motoRequests } = useMemo(() => {
-    const carRequests = units.reduce((acc, u) => acc + u.carSpaces, 0);
-    const motoRequests = units.reduce((acc, u) => acc + u.motoSpaces, 0);
+    const carRequests = unidades.reduce((acc, u) => acc + u.carSpaces, 0);
+    const motoRequests = unidades.reduce((acc, u) => acc + u.motoSpaces, 0);
     return { carRequests, motoRequests };
-  }, [units]);
+  }, [unidades]);
 
   // Conta vagas por tipo
   const { carSpaces, motoSpaces } = useMemo(() => {
-    const carSpaces = spaces.filter(s => s.type !== 'MOTO').length;
-    const motoSpaces = spaces.filter(s => s.type === 'MOTO').length;
+    const carSpaces = vagas.filter(s => s.type !== 'MOTO').length;
+    const motoSpaces = vagas.filter(s => s.type === 'MOTO').length;
     return { carSpaces, motoSpaces };
-  }, [spaces]);
+  }, [vagas]);
 
   const hasCarDeficit = carRequests > carSpaces;
   const hasMotoDeficit = motoRequests > motoSpaces;
   const hasInventoryDeficit = hasCarDeficit || hasMotoDeficit;
-  const canStartRaffle = !hasInventoryDeficit && !isRaffling;
+  const canStartRaffle = !hasInventoryDeficit && !estaRodando;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] sm:h-[60vh] text-center animate-fadeIn px-4 sm:px-6 pt-8 sm:pt-16">
       <div className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-white rounded-2xl sm:rounded-[2.5rem] shadow-2xl flex items-center justify-center mb-6 sm:mb-8 border border-slate-100 ${
-        isRaffling ? 'animate-spin-slow' : 'animate-float'
+        estaRodando ? 'animate-spin-slow' : 'animate-float'
       }`}>
         <i className="fa-solid fa-microchip text-4xl sm:text-5xl text-indigo-600"></i>
       </div>
@@ -148,7 +148,7 @@ export const SimulationStep: React.FC<SimulationStepProps> = ({
       )}
       
       <button
-        onClick={onStartRaffle}
+        onClick={aoIniciarSorteio}
         disabled={!canStartRaffle}
         className={`px-8 sm:px-12 md:px-16 py-4 sm:py-5 md:py-6 rounded-xl sm:rounded-2xl text-base sm:text-lg md:text-xl font-black tracking-wide sm:tracking-widest shadow-2xl transition-all ${
           !canStartRaffle 
@@ -156,7 +156,7 @@ export const SimulationStep: React.FC<SimulationStepProps> = ({
             : 'bg-indigo-600 text-white uppercase hover:bg-indigo-500'
         }`}
       >
-        {isRaffling ? 'Calculando Matriz...' : hasInventoryDeficit ? 'Dados Inválidos' : 'Iniciar Sorteio'}
+        {estaRodando ? 'Calculando Matriz...' : hasInventoryDeficit ? 'Dados Inválidos' : 'Iniciar Sorteio'}
       </button>
     </div>
   );

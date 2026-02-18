@@ -3,45 +3,45 @@ import { Botao } from '../ui/Botao';
 import { ZonaUploadArquivo } from '../ui/ZonaUploadArquivo';
 import { Unit, ParkingSpace } from '../../types';
 
-interface DataIngestionStepProps {
-  unitsCount: number;
-  spacesCount: number;
-  allocationsCount: number;
-  units: Unit[];
-  spaces: ParkingSpace[];
-  onFileUpload: (file: File | undefined, type: 'units' | 'spaces' | 'allocations') => void;
-  onGenerateMock: () => void;
-  onNext: () => void;
+interface PropriedadesPassoIngestao {
+  quantidadeUnidades: number;
+  quantidadeVagas: number;
+  quantidadeAlocacoes: number;
+  unidades: Unit[];
+  vagas: ParkingSpace[];
+  aoUploadArquivo: (file: File | undefined, type: 'units' | 'spaces' | 'allocations') => void;
+  aoGerarDadosSimulados: () => void;
+  aoProximo: () => void;
 }
 
-export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
-  unitsCount,
-  spacesCount,
-  allocationsCount,
-  units,
-  spaces,
-  onFileUpload,
-  onGenerateMock,
-  onNext
+export const PassoIngestao: React.FC<PropriedadesPassoIngestao> = ({
+  quantidadeUnidades,
+  quantidadeVagas,
+  quantidadeAlocacoes,
+  unidades,
+  vagas,
+  aoUploadArquivo,
+  aoGerarDadosSimulados,
+  aoProximo
 }) => {
   // Calcula solicitações por tipo
   const { carRequests, motoRequests } = useMemo(() => {
-    const carRequests = units.reduce((acc, u) => acc + u.carSpaces, 0);
-    const motoRequests = units.reduce((acc, u) => acc + u.motoSpaces, 0);
+    const carRequests = unidades.reduce((acc, u) => acc + u.carSpaces, 0);
+    const motoRequests = unidades.reduce((acc, u) => acc + u.motoSpaces, 0);
     return { carRequests, motoRequests };
-  }, [units]);
+  }, [unidades]);
 
   // Conta vagas por tipo
   const { carSpaces, motoSpaces } = useMemo(() => {
-    const carSpaces = spaces.filter(s => s.type !== 'MOTO').length;
-    const motoSpaces = spaces.filter(s => s.type === 'MOTO').length;
+    const carSpaces = vagas.filter(s => s.type !== 'MOTO').length;
+    const motoSpaces = vagas.filter(s => s.type === 'MOTO').length;
     return { carSpaces, motoSpaces };
-  }, [spaces]);
+  }, [vagas]);
 
   const hasCarDeficit = carRequests > carSpaces;
   const hasMotoDeficit = motoRequests > motoSpaces;
   const hasInventoryIssue = hasCarDeficit || hasMotoDeficit;
-  const canProceed = unitsCount > 0 && spacesCount > 0 && !hasInventoryIssue;
+  const canProceed = quantidadeUnidades > 0 && quantidadeVagas > 0 && !hasInventoryIssue;
 
   return (
     <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-xl border border-slate-200 animate-fadeIn overflow-x-hidden max-w-full">
@@ -63,7 +63,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
             <i className="fa-solid fa-download mr-2"></i>Baixar Exemplos
           </a>
           <button
-            onClick={onGenerateMock}
+            onClick={aoGerarDadosSimulados}
             className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-50 text-indigo-600 rounded-xl hover:bg-indigo-600 hover:text-white transition-all font-bold text-xs sm:text-sm flex items-center justify-center"
           >
             <i className="fa-solid fa-wand-magic-sparkles mr-2"></i>Gerar Dados Aleatórios
@@ -143,10 +143,10 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
             <span className="text-xs sm:text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
           </div>
           <ZonaUploadArquivo
-            aoSelecionarArquivo={(file) => onFileUpload(file, 'units')}
+            aoSelecionarArquivo={(file) => aoUploadArquivo(file, 'units')}
             icone="fa-people-group"
             titulo="Unidades"
-            quantidadeCarregada={unitsCount}
+            quantidadeCarregada={quantidadeUnidades}
             rotuloQuantidade="UNIDADES"
           />
           <div className="text-xs text-slate-500 mt-2 italic min-h-[40px]">
@@ -162,10 +162,10 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
             <span className="text-xs sm:text-sm font-bold text-slate-700">OBRIGATÓRIO</span>
           </div>
           <ZonaUploadArquivo
-            aoSelecionarArquivo={(file) => onFileUpload(file, 'spaces')}
+            aoSelecionarArquivo={(file) => aoUploadArquivo(file, 'spaces')}
             icone="fa-car-rear"
             titulo="Vagas"
-            quantidadeCarregada={spacesCount}
+            quantidadeCarregada={quantidadeVagas}
             rotuloQuantidade="VAGAS"
           />
           <div className="text-xs text-slate-500 mt-2 italic min-h-[40px]">
@@ -181,10 +181,10 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
             <span className="text-xs sm:text-sm font-bold text-slate-500">OPCIONAL</span>
           </div>
           <ZonaUploadArquivo
-            aoSelecionarArquivo={(file) => onFileUpload(file, 'allocations')}
+            aoSelecionarArquivo={(file) => aoUploadArquivo(file, 'allocations')}
             icone="fa-link"
             titulo="Vagas Atuais"
-            quantidadeCarregada={allocationsCount}
+            quantidadeCarregada={quantidadeAlocacoes}
             rotuloQuantidade="ALOCAÇÕES"
           />
           <div className="mt-2 min-h-[40px]">
@@ -220,7 +220,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
           Como preencher os arquivos CSV?
         </a>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
-          {unitsCount === 0 || spacesCount === 0 ? (
+          {quantidadeUnidades === 0 || quantidadeVagas === 0 ? (
             <p className="text-xs sm:text-sm text-amber-600 font-medium">
               <i className="fa-solid fa-exclamation-triangle mr-1"></i>
               Carregue pelo menos Unidades e Vagas
@@ -243,7 +243,7 @@ export const DataIngestionStep: React.FC<DataIngestionStepProps> = ({
               <span className="sm:hidden">Válido ✓</span>
             </p>
           )}
-          <Botao disabled={!canProceed} aoClicar={onNext}>
+          <Botao disabled={!canProceed} aoClicar={aoProximo}>
             Configurar Regras <i className="fa-solid fa-arrow-right ml-2"></i>
           </Botao>
         </div>
